@@ -49,6 +49,7 @@ public class IntroductionScene implements Scene {
         arkaPlan = new Rect(0,0, Constants.SCREEN_WIDTH,Constants.SCREEN_HEIGHT);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 1 * Constants.SCREEN_HEIGHT / 4);
 
+
     }
 
     @Override
@@ -94,6 +95,7 @@ public class IntroductionScene implements Scene {
                             Constants.SCREEN_HEIGHT),1);
             okDugmesi.setPoint(3*Constants.SCREEN_WIDTH/4,5*Constants.SCREEN_HEIGHT/6);
             okDugmesi.draw(canvas);
+            DialogClass dg =new DialogClass(paint,10,new Point(10,10),"Hello world teeütat");
 
         }
 

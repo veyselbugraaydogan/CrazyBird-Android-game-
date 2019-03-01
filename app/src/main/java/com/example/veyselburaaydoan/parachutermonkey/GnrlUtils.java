@@ -68,6 +68,7 @@ public class GnrlUtils {
 
 
     public static void drawMultilineText(Canvas canvas,String text,Paint paint,Rect rect,int lineSpace) {
+
         text +=" ";
 
         ArrayList<Integer> stringData = new ArrayList<>();
@@ -85,7 +86,7 @@ public class GnrlUtils {
         }
 /*
         Log.v("General Utils", "drawMultilines : " + stringData.size());*/
-        Log.v("General Utils", "drawMultilines : " + stringData.toString());
+        //Log.v("General Utils", "drawMultilines : " + stringData.toString());
 
 
         //yapıyı oluşturma
@@ -115,13 +116,14 @@ public class GnrlUtils {
                 canvas.drawText(getStringBetweenIndex(text,baslangicIndexi,indexCount), rect.left, y, paint);
                 baslangicIndexi = indexCount;
                 y += height + lineSpace*height;
-                Log.v("General Utils", "if içerisi ");
+                //Log.v("General Utils", "if içerisi ");
             }
         }
         canvas.drawText(getStringBetweenIndex(text,baslangicIndexi,indexCount), rect.left, y, paint);
     }
 
-    private static String getStringBetweenIndex(String text,int baslangicIndexi,int bitisIndexi){
+
+    public static String getStringBetweenIndex(String text,int baslangicIndexi,int bitisIndexi){
         String s=new String();
         for (int i=baslangicIndexi;i<bitisIndexi;i++){
             s +=text.charAt(i);
