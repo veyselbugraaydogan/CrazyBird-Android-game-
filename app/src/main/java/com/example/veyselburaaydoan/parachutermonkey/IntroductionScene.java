@@ -87,7 +87,7 @@ public class IntroductionScene implements Scene {
            // paint = new Paint();
             paint.setTextSize(60);
             paint.setColor(Color.WHITE);
-            GeneralUtils.drawMultilineText(canvas,Constants.solagit,paint,
+            GnrlUtils.drawMultilineText(canvas,Constants.solagit,paint,
                     new Rect(Constants.SCREEN_WIDTH/2,
                             Constants.SCREEN_HEIGHT/2,
                             Constants.SCREEN_WIDTH,

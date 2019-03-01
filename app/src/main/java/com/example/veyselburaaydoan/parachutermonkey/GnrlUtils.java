@@ -9,7 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 
-public class GeneralUtils {
+public class GnrlUtils {
 
     public static void calcultateElapsedTime(){
         if(((System.currentTimeMillis() - Constants.START_TIME) - Constants.ELAPSED_TIME)>2000){
@@ -116,11 +116,9 @@ public class GeneralUtils {
                 baslangicIndexi = indexCount;
                 y += height + lineSpace*height;
                 Log.v("General Utils", "if içerisi ");
-            }else if(i==stringData.size()-1){
-                canvas.drawText(getStringBetweenIndex(text,baslangicIndexi,indexCount), rect.left, y, paint);
-                Log.v("General Utils", "if içerisi ");
             }
         }
+        canvas.drawText(getStringBetweenIndex(text,baslangicIndexi,indexCount), rect.left, y, paint);
     }
 
     private static String getStringBetweenIndex(String text,int baslangicIndexi,int bitisIndexi){

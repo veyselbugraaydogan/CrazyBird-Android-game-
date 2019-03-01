@@ -56,9 +56,9 @@ public class InitializationScreenScene implements Scene {
     public void draw(Canvas canvas) {
 
         canvas.drawBitmap(
-                GeneralUtils.adjustOpacity(
+                GnrlUtils.adjustOpacity(
                         initBitmap,
-                        (int)(GeneralUtils.getAnimationOpacity(
+                        (int)(GnrlUtils.getAnimationOpacity(
                             ACILIS_SURESI,
                             Constants.ELAPSED_TIME,
                             2000,
