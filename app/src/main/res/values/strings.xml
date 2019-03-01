@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Parachuter Monkey</string>
+    <string name="sola_gitmek_icin">Tap left side of the screen to move left </string>
+    <string name="saga_gitmek_icin">Tap right side of the screen to move right </string>
+    <string name="tuzaklara_dokunma">Do not touch to traps.</string>
+</resources>
