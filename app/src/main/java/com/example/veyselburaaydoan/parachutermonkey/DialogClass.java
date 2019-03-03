@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ public class DialogClass implements GameObject{
 
     private final String TAG="Dialog Class";
 
-    private Paint paint;
+    private Paint textPaint;
     private int width;
     private Point solUstKose;
     private String text;
@@ -23,12 +22,16 @@ public class DialogClass implements GameObject{
     private ArrayList<Integer> stringData;
     private Rect header,textRect,bottom,button;
 
-    public DialogClass(Paint paint, int width, Point solustKose, String text){
+    private int primaryColor,secondaryColor;
 
-        this.paint=paint;
+    public DialogClass(Paint textPaint, int width, Point solustKose, String text,int primaryColor,int secondaryColor){
+
+        this.textPaint =textPaint;
         this.width = width;
         this.solUstKose=solustKose;
         this.text=text;
+        this.primaryColor=primaryColor;
+        this.secondaryColor=secondaryColor;
 
         initiate();
 
@@ -58,13 +61,13 @@ public class DialogClass implements GameObject{
                 x = textRect.left;
                 indexCount -=stringData.get(i)+1;
                 i--;
-                canvas.drawText(GnrlUtils.getStringBetweenIndex(text,baslangicIndexi,indexCount), textRect.left, y, paint);
+                canvas.drawText(GnrlUtils.getStringBetweenIndex(text,baslangicIndexi,indexCount), textRect.left, y, textPaint);
                 baslangicIndexi = indexCount;
                 y += height + lineSpace*height;
                 //Log.v("General Utils", "if içerisi ");
             }
         }
-        canvas.drawText(GnrlUtils.getStringBetweenIndex(text,baslangicIndexi,indexCount), textRect.left, y, paint);
+        canvas.drawText(GnrlUtils.getStringBetweenIndex(text,baslangicIndexi,indexCount), textRect.left, y, textPaint);
 
     }
 
@@ -98,7 +101,7 @@ public class DialogClass implements GameObject{
     private void setWidthnHeight(){
 
         Rect bounds = new Rect();
-        paint.getTextBounds(text, 0, text.length(), bounds);
+        textPaint.getTextBounds(text, 0, text.length(), bounds);
         int height = bounds.height();
         int width = bounds.width();
 
