@@ -2,9 +2,11 @@ package com.example.veyselburaaydoan.parachutermonkey;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -24,7 +26,7 @@ public class DialogClass implements GameObject {
     private Rect header, textRect, bottomRect, buttonRect,bitmapRect;
 
     private Paint primaryPaint, secondaryPaint;
-    private Bitmap bitmap;
+    private Bitmap bitmap=null;
 
     private final int bitmapBuyuklugu = 20, bitmapPadding = 30;
 
@@ -39,7 +41,6 @@ public class DialogClass implements GameObject {
         this.bitmap = bitmap;
 
         initiate();
-        initiateRectangles();
     }
 /*
     public DialogClass(Paint textPaint, int width, Point solustKose, String text,int primaryColor,int secondaryColor){
@@ -53,6 +54,8 @@ public class DialogClass implements GameObject {
         calculateTheLines();
         setWidthnHeight();
         setLineCount();
+        initiateRectangles();
+        Log.v(TAG, "initiated");
     }
 
     private void initiateRectangles() {
@@ -74,7 +77,7 @@ public class DialogClass implements GameObject {
 
         bottomRect =new Rect(x, y, x + width, y + lineHeight*3);
 
-
+        Log.v(TAG, "initiate rect");
     }
 
     private int getTextHeight() {
@@ -88,25 +91,7 @@ public class DialogClass implements GameObject {
         canvas.drawRect(textRect,primaryPaint);
         if (bitmap != null)
             canvas.drawBitmap(bitmap,null,bitmapRect,null);
-
-        float x = textRect.left;
-        float y = textRect.top + lineHeight;
-        int indexCount = 0;
-        int baslangicIndexi = 0;
-        for (int i = 0; i < stringData.size(); i++) {
-            x += (stringData.get(i) + 1) * width;
-            indexCount += stringData.get(i) + 1;
-            if (x > textRect.right) {
-                x = textRect.left;
-                indexCount -= stringData.get(i) + 1;
-                i--;
-                canvas.drawText(GnrlUtils.getStringBetweenIndex(text, baslangicIndexi, indexCount), textRect.left, y, textPaint);
-                baslangicIndexi = indexCount;
-                y += lineHeight + lineSpace * lineHeight;
-                //Log.v("General Utils", "if içerisi ");
-            }
-        }
-        canvas.drawText(GnrlUtils.getStringBetweenIndex(text, baslangicIndexi, indexCount), textRect.left, y, textPaint);
+        GnrlUtils.drawMultilineText(canvas,text,textPaint,textRect,(int)lineSpace);
 
         canvas.drawRect(bottomRect,secondaryPaint);
 
@@ -125,6 +110,7 @@ public class DialogClass implements GameObject {
     }
 
     private void calculateTheLines() {
+        Log.v(TAG, "calculate lines");
         text += " ";
 
         int a = 0;
@@ -152,21 +138,20 @@ public class DialogClass implements GameObject {
     }
 
     private void setLineCount() {
+        Log.v(TAG, "set line counts");
 
-        float x = textRect.left;
-        float y = textRect.top;
+        float x = solUstKose.x;
         int indexCount = 0;
         int baslangicIndexi = 0;
         for (int i = 0; i < stringData.size(); i++) {
             x += (stringData.get(i) + 1) * width;
             indexCount += stringData.get(i) + 1;
-            if (x > textRect.right) {
-                x = textRect.left;
+            if (x > x +width) {
+                x = solUstKose.x;
                 indexCount -= stringData.get(i) + 1;
                 i--;
                 lineCount++;
                 baslangicIndexi = indexCount;
-                y += lineHeight + lineSpace * lineHeight;
             }
         }
         lineCount = lineCount + 1;
