@@ -36,8 +36,10 @@ public class DialogClass implements GameObject {
         this.width = width;
         this.solUstKose = solustKose;
         this.text = text;
-        primaryPaint= new Paint(primaryColor);
-        secondaryPaint= new Paint(secondaryColor);
+        primaryPaint = new Paint();
+        secondaryPaint = new Paint();
+        primaryPaint.setColor(primaryColor);
+        secondaryPaint.setColor(secondaryColor);
         this.bitmap = bitmap;
 
         initiate();
@@ -51,7 +53,7 @@ public class DialogClass implements GameObject {
 
     private void initiate() {
         stringData = new ArrayList<>();
-        calculateTheLines();
+
         setWidthnHeight();
         setLineCount();
         initiateRectangles();
@@ -87,6 +89,7 @@ public class DialogClass implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
+
         canvas.drawRect(header,secondaryPaint);
         canvas.drawRect(textRect,primaryPaint);
         if (bitmap != null)
@@ -109,8 +112,24 @@ public class DialogClass implements GameObject {
         r.top = y;
     }
 
-    private void calculateTheLines() {
-        Log.v(TAG, "calculate lines");
+
+
+    private void setWidthnHeight() {
+
+        Rect bounds = new Rect();
+        textPaint.getTextBounds(text, 0, text.length(), bounds);
+        lineHeight = bounds.height();
+        int width = bounds.width();
+
+        width /= text.length();
+
+        spaceNormal = width;
+        Log.v(TAG, "line height:"+ lineHeight + "character width: "+width );
+    }
+
+    private void setLineCount() {
+
+        //Log.v(TAG, "calculate lines");
         text += " ";
 
         int a = 0;
@@ -123,35 +142,21 @@ public class DialogClass implements GameObject {
                 a = i + 1;
             }
         }
-    }
 
-    private void setWidthnHeight() {
 
-        Rect bounds = new Rect();
-        textPaint.getTextBounds(text, 0, text.length(), bounds);
-        lineHeight = bounds.height();
-        int width = bounds.width();
-
-        width /= text.length();
-
-        spaceNormal = width;
-    }
-
-    private void setLineCount() {
         Log.v(TAG, "set line counts");
 
         float x = solUstKose.x;
         int indexCount = 0;
         int baslangicIndexi = 0;
         for (int i = 0; i < stringData.size(); i++) {
-            x += (stringData.get(i) + 1) * width;
-            indexCount += stringData.get(i) + 1;
-            if (x > x +width) {
+            x += (stringData.get(i) + 1) * spaceNormal;
+            //indexCount += stringData.get(i) + 1;
+            if (x > solUstKose.x +width+spaceNormal) {
                 x = solUstKose.x;
-                indexCount -= stringData.get(i) + 1;
+                //indexCount -= stringData.get(i) + 1;
                 i--;
                 lineCount++;
-                baslangicIndexi = indexCount;
             }
         }
         lineCount = lineCount + 1;
