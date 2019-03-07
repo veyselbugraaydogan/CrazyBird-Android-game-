@@ -2,7 +2,6 @@ package com.example.veyselburaaydoan.parachutermonkey;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -28,7 +27,9 @@ public class DialogClass implements GameObject {
     private Paint primaryPaint, secondaryPaint;
     private Bitmap bitmap=null;
 
-    private final int bitmapBuyuklugu = 20, bitmapPadding = 30;
+    private Dugme okButton;
+
+    private int bitmapBuyuklugu = 20, bitmapPadding = 30;
 
     public DialogClass(Paint textPaint, int width, Point solustKose, String text, int primaryColor, int secondaryColor, Bitmap bitmap) {
 
@@ -44,6 +45,15 @@ public class DialogClass implements GameObject {
 
         initiate();
     }
+
+    public void setBitmapBuyuklugu(int bitmapBuyuklugu) {
+        this.bitmapBuyuklugu = bitmapBuyuklugu;
+    }
+
+    public void setBitmapPadding(int bitmapPadding) {
+        this.bitmapPadding = bitmapPadding;
+    }
+
 /*
     public DialogClass(Paint textPaint, int width, Point solustKose, String text,int primaryColor,int secondaryColor){
         this(textPaint,width,solustKose,text,primaryColor,secondaryColor,null);
@@ -52,32 +62,46 @@ public class DialogClass implements GameObject {
 
 
     private void initiate() {
+
+        //Bu sırayla olmalı
+
         stringData = new ArrayList<>();
 
         setWidthnHeight();
         setLineCount();
-        initiateRectangles();
+        setRects();
+        setButton();
         Log.v(TAG, "initiated");
     }
 
-    private void initiateRectangles() {
+    private void setButton(){
+
+        okButton = new Dugme(width/2+bottomRect.left
+                ,((bottomRect.bottom - bottomRect.top)/2)+bottomRect.top
+                , Constants.CURRENT_CONTEXT.getResources().getString(R.string.tamam)
+                ,bottomRect.right - bottomRect.left - (2*width/3)
+                , bottomRect.bottom - bottomRect.top - (bottomRect.bottom - bottomRect.top)/2);
+
+    }
+
+
+    private void setRects() {
         int x = solUstKose.x;
         int y = solUstKose.y;
         header = new Rect(x, y, x + width, y + lineHeight);
         y += lineHeight;
-        if (bitmap == null) {
-            textRect = new Rect(x, y, x + width, y + getTextHeight());
-            bitmapRect = null;
-            y += getTextHeight();
-        } else {
-            textRect = new Rect(x, y, x + width, y + getTextHeight()+(bitmapPadding*2)+bitmapBuyuklugu);
-            int bL=(width-bitmapBuyuklugu)/2;
-            bitmapRect =new Rect(x+bL, y+bitmapPadding, x + bL +bitmapBuyuklugu,
-                    y + bitmapPadding+ bitmapBuyuklugu);
-            y += getTextHeight()+(bitmapPadding*2)+bitmapBuyuklugu;
+
+        if(bitmap != null){
+            bitmapRect = new Rect(x,y,x + width,y + (bitmapPadding*2)+bitmapBuyuklugu);
+            y +=(bitmapPadding*2)+bitmapBuyuklugu;
+        }else {
+            bitmapRect =null;
         }
 
-        bottomRect =new Rect(x, y, x + width, y + lineHeight*3);
+        textRect = new Rect(x, y, x + width, y + getTextHeight());
+        y += getTextHeight();
+
+        bottomRect =new Rect(x, y, x + width, y + lineHeight*2);
 
         Log.v(TAG, "initiate rect");
     }
@@ -92,11 +116,14 @@ public class DialogClass implements GameObject {
 
         canvas.drawRect(header,secondaryPaint);
         canvas.drawRect(textRect,primaryPaint);
-        if (bitmap != null)
-            canvas.drawBitmap(bitmap,null,bitmapRect,null);
+        if (bitmap != null) {
+            canvas.drawRect(bitmapRect,primaryPaint);
+            canvas.drawBitmap(bitmap, null, bitmapRect, null);
+        }
         GnrlUtils.drawMultilineText(canvas,text,textPaint,textRect,(int)lineSpace);
 
         canvas.drawRect(bottomRect,secondaryPaint);
+        okButton.draw(canvas);
 
     }
 

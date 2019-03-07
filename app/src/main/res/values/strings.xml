@@ -4,4 +4,5 @@
     <string name="sola_gitmek_icin">Tap left side of the screen to move left </string>
     <string name="saga_gitmek_icin">Tap right side of the screen to move right </string>
     <string name="tuzaklara_dokunma">Do not touch to traps.</string>
+    <string name="tamam">OK</string>
 </resources>

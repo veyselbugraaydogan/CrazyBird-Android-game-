@@ -15,16 +15,22 @@ public class Dugme implements GameObject {
     private int butonGenisligi=Constants.SCREEN_WIDTH/2;
     private  int butonYuksekligi=100;
 
+    /*
+    private int butonGenisligi=Constants.SCREEN_WIDTH/2;
+    private  int butonYuksekligi=100;
+*/
     private String butonYazisi;
 
     private int x;
     private int y;
 
 
-    public Dugme (int x,int y,String butonYazisi) {
+    public Dugme (int x,int y,String butonYazisi,int butonGenisligi,int butonYuksekligi) {
         this.x = x;
         this.y = y;
         this.butonYazisi=butonYazisi;
+        this.butonGenisligi=butonGenisligi;
+        this.butonYuksekligi=butonYuksekligi;
 
         rectangleBelow = new Rect((( x ) - (butonGenisligi/2))-10,
                 (y - butonYuksekligi/2)-10,

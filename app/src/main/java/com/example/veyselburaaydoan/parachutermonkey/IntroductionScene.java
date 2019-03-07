@@ -36,7 +36,7 @@ public class IntroductionScene implements Scene {
         this.sceneNumber=sceneNumber;
         int y = 2*Constants.SCREEN_HEIGHT / 3;
         int x = Constants.SCREEN_WIDTH / 2;
-        okDugmesi = new Dugme(x, y,"OK");
+        okDugmesi = new Dugme(x, y,"OK",Constants.SCREEN_WIDTH/2,100);
 
         BitmapFactory bf = new BitmapFactory();
         trap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.trap);
@@ -55,9 +55,12 @@ public class IntroductionScene implements Scene {
         paint =new Paint();
         paint.setTextSize(60);
         paint.setColor(Color.WHITE);
-        dialog =new DialogClass(paint,Constants.SCREEN_WIDTH/2,new Point(10,10),Constants.solagit,
+        dialog =new DialogClass(paint,Constants.SCREEN_WIDTH/2,
+                new Point(Constants.SCREEN_WIDTH/2,3*Constants.SCREEN_HEIGHT/4),Constants.solagit,
                 Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_primary),
-                Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_second),null);
+                Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_second),trap);
+        dialog.setBitmapBuyuklugu(150);
+        dialog.setBitmapPadding(20);
 
     }
 
@@ -92,23 +95,12 @@ public class IntroductionScene implements Scene {
         bulutManager.draw(canvas);
         rectPlayer.draw(canvas);
         if(seviye==0){
-
             paint = new Paint();
             paint.setColor(Color.GREEN);
             canvas.drawRect(new Rect(0,Constants.SCREEN_HEIGHT/2,
                     Constants.SCREEN_WIDTH/2,Constants.SCREEN_HEIGHT),paint);
            // paint = new Paint();
-            paint.setTextSize(60);
-            paint.setColor(Color.WHITE);
-           /* GnrlUtils.drawMultilineText(canvas,Constants.solagit,paint,
-                    new Rect(Constants.SCREEN_WIDTH/2,
-                            Constants.SCREEN_HEIGHT/2,
-                            Constants.SCREEN_WIDTH,
-                            Constants.SCREEN_HEIGHT),1);
-            okDugmesi.setPoint(3*Constants.SCREEN_WIDTH/4,5*Constants.SCREEN_HEIGHT/6);*/
-            //okDugmesi.draw(canvas);
             dialog.draw(canvas);
-
         }
 
         else if(seviye==1){

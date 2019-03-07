@@ -21,9 +21,10 @@ public class SettingsScene implements Scene {
 
         int y = Constants.SCREEN_HEIGHT / 3;
         int x = Constants.SCREEN_WIDTH / 2;
-        resumeDugmesi = new Dugme(x, y,"RESUME");
+        resumeDugmesi = new Dugme(x, y,"RESUME",Constants.SCREEN_WIDTH/2,100);
 
-        creditsDugmesi = new Dugme(x,(int)(y+resumeDugmesi.getButonYuksekligi()*1.62),"CREDITS");
+        creditsDugmesi = new Dugme(x,(int)(y+resumeDugmesi.getButonYuksekligi()*1.62),"CREDITS"
+                ,Constants.SCREEN_WIDTH/2,100);
 
         y=2*Constants.SCREEN_HEIGHT/3;  
 
