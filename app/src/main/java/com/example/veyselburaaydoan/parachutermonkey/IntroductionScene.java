@@ -31,6 +31,7 @@ public class IntroductionScene implements Scene {
     private DialogClass dialog;
 
     private Paint paint;
+    private Paint textPaint;
 
     public IntroductionScene(int sceneNumber){
         this.sceneNumber=sceneNumber;
@@ -53,12 +54,13 @@ public class IntroductionScene implements Scene {
         arkaPlan = new Rect(0,0, Constants.SCREEN_WIDTH,Constants.SCREEN_HEIGHT);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 1 * Constants.SCREEN_HEIGHT / 4);
         paint =new Paint();
-        paint.setTextSize(60);
-        paint.setColor(Color.WHITE);
-        dialog =new DialogClass(paint,Constants.SCREEN_WIDTH/2,
+        textPaint =new Paint();
+        textPaint.setTextSize(60);
+        textPaint.setColor(Color.WHITE);
+        dialog =new DialogClass(textPaint,Constants.SCREEN_WIDTH/2,
                 new Point(Constants.SCREEN_WIDTH/2,3*Constants.SCREEN_HEIGHT/4),Constants.solagit,
                 Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_primary),
-                Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_second),trap);
+                Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_second),null);
         //dialog.setBitmapBuyuklugu(150);
         //dialog.setBitmapPadding(20);
 
@@ -104,23 +106,26 @@ public class IntroductionScene implements Scene {
         }
 
         else if(seviye==1){
-            okDugmesi.setPoint(Constants.SCREEN_WIDTH/4,5*Constants.SCREEN_HEIGHT/6);
-            okDugmesi.draw(canvas);
+            paint = new Paint();
+            paint.setColor(Color.GREEN);
+            canvas.drawRect(new Rect(Constants.SCREEN_WIDTH/2,Constants.SCREEN_HEIGHT/2,
+                    Constants.SCREEN_WIDTH,Constants.SCREEN_HEIGHT),paint);
+            // paint = new Paint();
+
+            dialog = new DialogClass(textPaint,Constants.SCREEN_WIDTH/2,
+                    new Point(0,3*Constants.SCREEN_HEIGHT/4),Constants.sagaGit,
+                    Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_primary),
+                    Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_second),null);
+            dialog.draw(canvas);
+
         }
         else if(seviye==2){
-            /*
-            Paint paint = new Paint();
-            paint.setTextSize(Constants.KUCUK_YAZI);
-            paint.setColor(Color.WHITE);
-            okDugmesi.setPoint(Constants.SCREEN_WIDTH/2,2*Constants.SCREEN_HEIGHT/3);
-            okDugmesi.draw(canvas);
-            GeneralUtils.drawCenterText(canvas,paint,Constants.tuzakYazisi,
-                    Constants.SCREEN_HEIGHT/2,new Rect());
-            canvas.drawBitmap(trap,null,rect,null);*/
-        }
-        else if(seviye==3){
-            okDugmesi.setPoint(Constants.SCREEN_WIDTH/2,2*Constants.SCREEN_HEIGHT/3);
-            okDugmesi.draw(canvas);
+            dialog = new DialogClass(textPaint,Constants.SCREEN_WIDTH,
+                    new Point(0,Constants.SCREEN_HEIGHT/4),Constants.tuzakYazisi,
+                    Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_primary),
+                    Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_second),trap);
+            dialog.draw(canvas);
+
         }else{
             SceneManager.setScene(sceneNumber,0);
         }
@@ -136,6 +141,11 @@ public class IntroductionScene implements Scene {
         if (event.getAction() == MotionEvent.ACTION_DOWN ) {
             int x = (int) event.getX();
             int y = (int) event.getY();
+
+
+            if (dialog.doesCollide(new Rect(x,y,x+1,y+1))){
+                seviye++;
+            }
 
             if(okDugmesi.doesCollide(new Rect(x,y,x+1,y+1))){
                 Log.v("Touch recieved::","resume düğmesine basıldı");

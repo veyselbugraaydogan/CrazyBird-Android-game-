@@ -150,6 +150,10 @@ public class DialogClass implements GameObject {
         r.top = y;
     }
 
+    public boolean doesCollide(Rect r){
+        return okButton.doesCollide(r);
+    }
+
 
 
     private void setWidthnHeight() {
