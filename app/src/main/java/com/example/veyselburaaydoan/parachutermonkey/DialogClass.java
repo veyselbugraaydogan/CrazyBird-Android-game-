@@ -2,6 +2,7 @@ package com.example.veyselburaaydoan.parachutermonkey;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -92,6 +93,10 @@ public class DialogClass implements GameObject {
         y += lineHeight;
 
         if(bitmap != null){
+
+            bitmapBuyuklugu = 3 * lineHeight;
+            bitmapPadding = lineHeight;
+
             bitmapRect = new Rect(x,y,x + width,y + (bitmapPadding*2)+bitmapBuyuklugu);
             y +=(bitmapPadding*2)+bitmapBuyuklugu;
         }else {
@@ -117,8 +122,14 @@ public class DialogClass implements GameObject {
         canvas.drawRect(header,secondaryPaint);
         canvas.drawRect(textRect,primaryPaint);
         if (bitmap != null) {
-            canvas.drawRect(bitmapRect,primaryPaint);
-            canvas.drawBitmap(bitmap, null, bitmapRect, null);
+
+            canvas.drawRect(
+                    bitmapRect
+                    ,primaryPaint);
+            canvas.drawBitmap(bitmap, null, new Rect(((width-bitmapBuyuklugu)/2)+bitmapRect.left
+                    ,bitmapRect.top+bitmapPadding
+                    ,((width-bitmapBuyuklugu)/2)+bitmapRect.left+bitmapBuyuklugu
+                    ,bitmapRect.top+bitmapPadding+bitmapBuyuklugu), null);
         }
         GnrlUtils.drawMultilineText(canvas,text,textPaint,textRect,(int)lineSpace);
 

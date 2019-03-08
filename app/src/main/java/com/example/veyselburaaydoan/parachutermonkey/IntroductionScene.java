@@ -59,8 +59,8 @@ public class IntroductionScene implements Scene {
                 new Point(Constants.SCREEN_WIDTH/2,3*Constants.SCREEN_HEIGHT/4),Constants.solagit,
                 Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_primary),
                 Constants.CURRENT_CONTEXT.getResources().getColor(R.color.dialog_second),trap);
-        dialog.setBitmapBuyuklugu(150);
-        dialog.setBitmapPadding(20);
+        //dialog.setBitmapBuyuklugu(150);
+        //dialog.setBitmapPadding(20);
 
     }
 
