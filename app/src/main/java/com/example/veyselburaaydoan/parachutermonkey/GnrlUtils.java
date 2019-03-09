@@ -109,7 +109,7 @@ public class GnrlUtils {
         for(int i=0;i<stringData.size();i++){
             x +=(stringData.get(i)+1)*width;
             indexCount +=stringData.get(i)+1;
-            if(x > rect.right){
+            if(x > rect.right-width){
                 x = rect.left;
                 indexCount -=stringData.get(i)+1;
                 i--;
