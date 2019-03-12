@@ -272,7 +272,7 @@ public class GameplayScene implements Scene {
             sharedPref = Constants.MAIN_ACTİVİTY.getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("saved_high_score_key", obstacleManager.getScore());
-            editor.commit();
+            editor.apply();
         }
 
         //Log.v("GAME OVER İÇİ","gameover içi");

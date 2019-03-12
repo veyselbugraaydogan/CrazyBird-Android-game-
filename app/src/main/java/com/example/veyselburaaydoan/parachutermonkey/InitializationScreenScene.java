@@ -1,5 +1,7 @@
 package com.example.veyselburaaydoan.parachutermonkey;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,12 +16,14 @@ public class InitializationScreenScene implements Scene {
 
 
     private final String TAG = "INITIALIZATION SCREEN::";
-    private final long ACILIS_SURESI=0;
+    private final long ACILIS_SURESI=5000;
     private int sceneNumber;
     private int saniye=0;
     private int opacity=0;
     private Paint paint;
     private Rect rect;
+
+    private SharedPreferences sharedPref;
 
 
     private Bitmap initBitmap;
@@ -48,7 +52,14 @@ public class InitializationScreenScene implements Scene {
         Log.v(TAG,"Elapsed Time ::" + Constants.ELAPSED_TIME);
 
         if(Constants.ELAPSED_TIME>=ACILIS_SURESI){
-            SceneManager.setScene(sceneNumber,4);
+
+            /*Burada scene değiştirilme işlemi var*/
+
+            if (isFirst()){
+                SceneManager.setScene(sceneNumber,4);
+            }else{
+                SceneManager.setScene(sceneNumber,0);
+            }
         }
     }
 
@@ -62,7 +73,7 @@ public class InitializationScreenScene implements Scene {
                             ACILIS_SURESI,
                             Constants.ELAPSED_TIME,
                             2000,
-                            2000))),
+                                (int)ACILIS_SURESI/3))),
                 null, rect, null);
 
     }
@@ -92,6 +103,12 @@ public class InitializationScreenScene implements Scene {
 
 
         saniye = (int) Constants.ELAPSED_TIME / 1000;
+    }
+
+    private boolean isFirst(){
+        sharedPref = Constants.MAIN_ACTİVİTY.getSharedPreferences(
+                Constants.MAIN_ACTİVİTY.getLocalClassName(), Context.MODE_PRIVATE);
+        return sharedPref.getBoolean("ilkMiPref", true);
     }
 
 }
