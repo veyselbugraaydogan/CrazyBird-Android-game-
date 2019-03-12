@@ -7,6 +7,8 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+
 
 public class SettingsScene implements Scene {
 
@@ -15,10 +17,19 @@ public class SettingsScene implements Scene {
     private SesButonu sesButonu;
     private int sceneNumber;
 
+    private ArrayList<GameObject> objects ;
+
     public SettingsScene(int sceneNumber) {
 
         this.sceneNumber = sceneNumber;
 
+        initialize();
+
+
+
+    }
+
+    private void initialize(){
         int y = Constants.SCREEN_HEIGHT / 3;
         int x = Constants.SCREEN_WIDTH / 2;
         resumeDugmesi = new Dugme(x, y,"RESUME",Constants.SCREEN_WIDTH/2,100);
@@ -26,9 +37,14 @@ public class SettingsScene implements Scene {
         creditsDugmesi = new Dugme(x,(int)(y+resumeDugmesi.getButonYuksekligi()*1.62),"CREDITS"
                 ,Constants.SCREEN_WIDTH/2,100);
 
-        y=2*Constants.SCREEN_HEIGHT/3;  
+        y=2*Constants.SCREEN_HEIGHT/3;
 
         sesButonu = new SesButonu(x,y);
+
+        objects = new ArrayList<>();
+        objects.add(resumeDugmesi);
+        objects.add(creditsDugmesi);
+        objects.add(sesButonu);
     }
 
     @Override

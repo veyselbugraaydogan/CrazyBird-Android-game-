@@ -265,7 +265,7 @@ public class GameplayScene implements Scene {
     private int gameOver(){
         SharedPreferences sharedPref = Constants.MAIN_ACTİVİTY.getSharedPreferences(
                 Constants.MAIN_ACTİVİTY.getLocalClassName(), Context.MODE_PRIVATE);
-        int defaultValue = Constants.MAIN_ACTİVİTY.getResources().getInteger(R.integer.saved_high_score_default_key);
+        int defaultValue = 0;
         int highScore = sharedPref.getInt("saved_high_score_key", defaultValue);
 
         if(obstacleManager.getScore()>highScore) {

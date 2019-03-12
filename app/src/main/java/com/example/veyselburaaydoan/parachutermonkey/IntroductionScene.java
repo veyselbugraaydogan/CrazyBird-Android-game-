@@ -1,6 +1,7 @@
 package com.example.veyselburaaydoan.parachutermonkey;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -32,6 +33,8 @@ public class IntroductionScene implements Scene {
 
     private Paint paint;
     private Paint textPaint;
+
+    private SharedPreferences sharedPref;
 
     public IntroductionScene(int sceneNumber){
         this.sceneNumber=sceneNumber;
@@ -127,7 +130,13 @@ public class IntroductionScene implements Scene {
             dialog.draw(canvas);
 
         }else{
-            SceneManager.setScene(sceneNumber,0);
+            if (isFirst()){
+                //applyPrefFalse();
+                SceneManager.setScene(sceneNumber,0);
+
+            }else{
+                SceneManager.setScene(sceneNumber,1);
+            }
         }
     }
 
@@ -139,6 +148,7 @@ public class IntroductionScene implements Scene {
     @Override
     public void recieveTouch(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN ) {
+
             int x = (int) event.getX();
             int y = (int) event.getY();
 
@@ -181,6 +191,19 @@ public class IntroductionScene implements Scene {
     @Override
     public void doTheMath() {
 
+    }
+
+    private boolean isFirst(){
+        sharedPref = Constants.MAIN_ACTİVİTY.getSharedPreferences(
+                Constants.MAIN_ACTİVİTY.getLocalClassName(), Context.MODE_PRIVATE);
+        return sharedPref.getBoolean("ilkMiPref", true);
+    }
+
+    private void applyPrefFalse(){
+        sharedPref = Constants.MAIN_ACTİVİTY.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("ilkMiPref",false);
+        editor.apply();
     }
 
 
