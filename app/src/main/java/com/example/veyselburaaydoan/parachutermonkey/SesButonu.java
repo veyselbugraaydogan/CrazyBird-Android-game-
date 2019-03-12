@@ -6,19 +6,19 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class SesButonu implements GameObject {
+public class SesButonu implements ButtonInterface{
     private int butonGenisligi = 100;
     private int butonYuksekligi = 100;
     private Rect rectangle;
     private boolean soundOn = false;
     /* renamed from: x */
-    private int f18x;
+    private int x;
     /* renamed from: y */
-    private int f19y;
+    private int y;
 
     public SesButonu(int x, int y) {
-        this.f18x = x;
-        this.f19y = y;
+        this.x = x;
+        this.y = y;
         int i = this.butonGenisligi;
         int i2 = x - (i / 2);
         int i3 = this.butonYuksekligi;
@@ -33,7 +33,7 @@ public class SesButonu implements GameObject {
         }
         draw(new Canvas());
     }
-
+    @Override
     public void draw(Canvas canvas) {
         Bitmap duvarImg;
         BitmapFactory bf = new BitmapFactory();
@@ -44,11 +44,16 @@ public class SesButonu implements GameObject {
         }
         canvas.drawBitmap(duvarImg, null, this.rectangle, new Paint());
     }
-
+    @Override
     public void update() {
     }
 
     public boolean doesCollide(Rect rect) {
         return Rect.intersects(this.rectangle, rect);
+    }
+
+    @Override
+    public void createButton() {
+
     }
 }

@@ -7,8 +7,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
+import android.widget.Button;
 
-public class SettingsButton implements GameObject {
+public class SettingsButton implements ButtonInterface {
     private Rect rectangle;
 
     private int butonGenisligi=100;
@@ -49,5 +50,10 @@ public class SettingsButton implements GameObject {
 
     public boolean doesCollide(Rect rect){
         return Rect.intersects(rectangle , rect );
+    }
+
+    @Override
+    public void createButton() {
+
     }
 }
