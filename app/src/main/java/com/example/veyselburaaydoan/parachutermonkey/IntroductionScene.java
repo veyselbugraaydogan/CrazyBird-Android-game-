@@ -180,7 +180,7 @@ public class IntroductionScene implements Scene {
 
     @Override
     public void onCreate() {
-
+        seviye=0;
     }
 
     @Override

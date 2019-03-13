@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 
 public class SesButonu implements ButtonInterface{
@@ -22,7 +23,7 @@ public class SesButonu implements ButtonInterface{
         int i = this.butonGenisligi;
         int i2 = x - (i / 2);
         int i3 = this.butonYuksekligi;
-        this.rectangle = new Rect(i2, y - (i3 / 2), (i / 2) + x, (i3 / 2) + y);
+        rectangle = new Rect(i2, y - (i3 / 2), (i / 2) + x, (i3 / 2) + y);
     }
 
     public void soundOnOf() {
@@ -53,7 +54,12 @@ public class SesButonu implements ButtonInterface{
     }
 
     @Override
-    public void createButton() {
-
+    public void setButtonCoordinate(Point point) {
+        this.x = point.x;
+        this.y = point.y;
+        int i = this.butonGenisligi;
+        int i2 = x - (i / 2);
+        int i3 = this.butonYuksekligi;
+        rectangle = new Rect(i2, y - (i3 / 2), (i / 2) + x, (i3 / 2) + y);
     }
 }

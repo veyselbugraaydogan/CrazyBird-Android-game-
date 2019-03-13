@@ -1,5 +1,7 @@
 package com.example.veyselburaaydoan.parachutermonkey;
 
+import android.graphics.Point;
+
 public interface ButtonInterface extends GameObject {
-    void createButton();
+    void setButtonCoordinate(Point point);
 }

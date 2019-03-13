@@ -7,7 +7,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 
-public class Dugme implements GameObject {
+public class Dugme implements ButtonInterface {
 
     private Rect rectangleBelow;
     private Rect rectangle;
@@ -100,5 +100,20 @@ public class Dugme implements GameObject {
                 ( x + (butonGenisligi/2)),
                 y + butonYuksekligi/2);
 
+    }
+
+    @Override
+    public void setButtonCoordinate(Point point) {
+        this.x = point.x;
+        this.y = point.y;
+        rectangleBelow = new Rect((( x ) - (butonGenisligi/2))-10,
+                (y - butonYuksekligi/2)-10,
+                ( x + (butonGenisligi/2))+10,
+                (y + butonYuksekligi/2)+10);
+
+        rectangle = new Rect(( x ) - (butonGenisligi/2),
+                y - butonYuksekligi/2,
+                ( x + (butonGenisligi/2)),
+                y + butonYuksekligi/2);
     }
 }
