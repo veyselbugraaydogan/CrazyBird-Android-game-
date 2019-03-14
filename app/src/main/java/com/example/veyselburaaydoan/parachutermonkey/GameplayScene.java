@@ -10,10 +10,15 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
-public class GameplayScene implements Scene {
+public class GameplayScene implements Scene , RewardedVideoAdListener {
 
+    private final String TAG="Gameplay Scene";
 
     private int sceneNumber;
     private Rect r = new Rect();
@@ -22,6 +27,9 @@ public class GameplayScene implements Scene {
     private ObstacleManager obstacleManager;
     private BulutManager bulutManager;
     private BaslatButonu baslatButonu;
+    private BaslatButonu reklamButonu;
+
+    private RewardedVideoAd mRewardedVideoAd;
 
     private int screenWidth;
 
@@ -63,6 +71,12 @@ public class GameplayScene implements Scene {
 
         arkaPlan = new Rect(0,0,screenWidth,Constants.SCREEN_HEIGHT);
 
+        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
+        MobileAds.initialize(Constants.CURRENT_CONTEXT, "ca-app-pub-3940256099942544~3347511713");
+
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(Constants.CURRENT_CONTEXT);
+        mRewardedVideoAd.setRewardedVideoAdListener(this);
+        loadRewardedVideoAd();
 
     }
 
@@ -78,6 +92,7 @@ public class GameplayScene implements Scene {
 
         bulutManager = new BulutManager();
         baslatButonu = new BaslatButonu();
+        reklamButonu = new BaslatButonu();
         settingsButton = new SettingsButton(Constants.SCREEN_WIDTH - 100, 100);
         startTime =  System.currentTimeMillis();
 
@@ -156,10 +171,15 @@ public class GameplayScene implements Scene {
                 paint.setColor(Color.RED);
                 paint.setTextSize((float)(paint.getTextSize()/1.6));
                 drawCenterText(canvas, paint, "Best Score" ,150 + paint.descent() - paint.ascent(),r);
+                reklamButonu.setButtonCoordinate(new Point(Constants.SCREEN_WIDTH/4,2*Constants.SCREEN_HEIGHT/3));
+                reklamButonu.draw(canvas);
+                baslatButonu.setButtonCoordinate(new Point(3*Constants.SCREEN_WIDTH/4,2*Constants.SCREEN_HEIGHT/3));
+                baslatButonu.draw(canvas);
             }else{
                 rectPlayer.update(playerPoint);
+                baslatButonu.setButtonCoordinate(new Point(Constants.SCREEN_WIDTH/2,2*Constants.SCREEN_HEIGHT/3));
+                baslatButonu.draw(canvas);
             }
-            baslatButonu.draw(canvas);
         }
         settingsButton.draw(canvas);
 
@@ -216,10 +236,19 @@ public class GameplayScene implements Scene {
             if (baslatButonu.doesCollide(new Rect((int) event.getX(), (int) event.getY(),
                     (int) event.getX() , (int) event.getY() )) && gameOver ) {
                 reset();
-                startTime =  System.currentTimeMillis();
+                startTime = Constants.START_TIME =System.currentTimeMillis();
                 ilk = false;
                 gameOver = false;
-                Log.v("RESET","Başlat butonuna basıldı");
+                Log.v(TAG,"Başlat butonuna basıldı");
+                return;
+            }
+
+            if (reklamButonu.doesCollide(new Rect((int) event.getX(), (int) event.getY(),
+                    (int) event.getX() , (int) event.getY() )) && gameOver ) {
+                if (mRewardedVideoAd.isLoaded()) {
+                    mRewardedVideoAd.show();
+                }
+                Log.v(TAG,"reklam butonuna basıldı");
                 return;
             }
 
@@ -235,8 +264,11 @@ public class GameplayScene implements Scene {
                 }
 
                 if ((int) event.getX() < Constants.SCREEN_WIDTH / 2) {
+
                     moveRight = false;
                     moveLeft = true;
+
+
                 }
 
             }
@@ -282,5 +314,49 @@ public class GameplayScene implements Scene {
     }
 
 
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        Log.v(TAG,"onRewardedVideoAdLoaded");
+    }
 
+    @Override
+    public void onRewardedVideoAdOpened() {
+        Log.v(TAG,"onRewardedVideoAdOpened");
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+        Log.v(TAG,"onRewardedVideoStarted");
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        Log.v(TAG,"onRewardedVideoAdClosed");
+        loadRewardedVideoAd();
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+        Log.v(TAG,"onRewarded");
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+        Log.v(TAG,"onRewardedVideoAdLeftApplication");
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+        Log.v(TAG,"onRewardedVideoAdFailedToLoad");
+    }
+
+    @Override
+    public void onRewardedVideoCompleted() {
+        Log.v(TAG,"onRewardedVideoCompleted");
+    }
+
+    private void loadRewardedVideoAd() {
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+                new AdRequest.Builder().build());
+    }
 }
