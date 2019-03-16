@@ -39,6 +39,10 @@ public class ObstacleManager {
 
     private int score = 0;
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     private final int engelSayisi=3;
 
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {

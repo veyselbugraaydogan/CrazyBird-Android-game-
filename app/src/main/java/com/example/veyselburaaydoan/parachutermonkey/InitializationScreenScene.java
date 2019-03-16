@@ -72,7 +72,7 @@ public class InitializationScreenScene implements Scene {
                         (int)(GnrlUtils.getAnimationOpacity(
                             ACILIS_SURESI,
                             Constants.ELAPSED_TIME,
-                            2000,
+                            1000,
                                 (int)ACILIS_SURESI/3))),
                 null, rect, null);
 
@@ -90,7 +90,7 @@ public class InitializationScreenScene implements Scene {
 
     @Override
     public void onCreate() {
-
+        Log.v(TAG,"onRewardedVideoAdLeftApplication");
     }
 
     @Override

@@ -19,6 +19,7 @@ public class MainActivity extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         Constants.SCREEN_HEIGHT = dm.heightPixels;
         Constants.SCREEN_WIDTH = dm.widthPixels;
+        Constants.CURRENT_CONTEXT = this;
 
         Constants.tuzakYazisi = getResources().getString(R.string.tuzaklara_dokunma);
         Constants.sagaGit = getResources().getString(R.string.saga_gitmek_icin);

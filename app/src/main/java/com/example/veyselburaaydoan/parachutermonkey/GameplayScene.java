@@ -9,6 +9,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
@@ -28,6 +29,10 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
     private BulutManager bulutManager;
     private BaslatButonu baslatButonu;
     private BaslatButonu reklamButonu;
+
+    private long bilinenElapsedTime;
+
+    private int rewardedScore =0;
 
     private RewardedVideoAd mRewardedVideoAd;
 
@@ -78,6 +83,11 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         mRewardedVideoAd.setRewardedVideoAdListener(this);
         loadRewardedVideoAd();
 
+    }
+
+    public void setmRewardedVideoAd(RewardedVideoAd mRewardedVideoAd){
+        this.mRewardedVideoAd=mRewardedVideoAd;
+        this.mRewardedVideoAd.setRewardedVideoAdListener(this);
     }
 
     private void init() {
@@ -246,6 +256,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
             if (reklamButonu.doesCollide(new Rect((int) event.getX(), (int) event.getY(),
                     (int) event.getX() , (int) event.getY() )) && gameOver ) {
                 if (mRewardedVideoAd.isLoaded()) {
+                    bilinenElapsedTime=Constants.ELAPSED_TIME;
                     mRewardedVideoAd.show();
                 }
                 Log.v(TAG,"reklam butonuna basıldı");
@@ -316,11 +327,13 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
 
     @Override
     public void onRewardedVideoAdLoaded() {
+        //Toast.makeText(Constants.CURRENT_CONTEXT,"on loaded",Toast.LENGTH_SHORT).show();
         Log.v(TAG,"onRewardedVideoAdLoaded");
     }
 
     @Override
     public void onRewardedVideoAdOpened() {
+        //Toast.makeText(Constants.CURRENT_CONTEXT,"on opened",Toast.LENGTH_SHORT).show();
         Log.v(TAG,"onRewardedVideoAdOpened");
     }
 
@@ -333,10 +346,19 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
     public void onRewardedVideoAdClosed() {
         Log.v(TAG,"onRewardedVideoAdClosed");
         loadRewardedVideoAd();
+        Constants.ELAPSED_TIME=bilinenElapsedTime;
+        ilk = false;
+        gameOver = false;
+        //Toast.makeText(Constants.CURRENT_CONTEXT,"on video ad closed",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewarded(RewardItem rewardItem) {
+        int score=obstacleManager.getScore();
+        reset();
+        obstacleManager.setScore(score);
+
+        Toast.makeText(Constants.CURRENT_CONTEXT,"on Rewarded",Toast.LENGTH_SHORT).show();
         Log.v(TAG,"onRewarded");
     }
 
