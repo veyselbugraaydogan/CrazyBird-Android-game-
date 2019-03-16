@@ -14,7 +14,7 @@ public class CreditsScene implements Scene {
 
     public CreditsScene(int sceneNumber) {
        this.sceneNumber=sceneNumber;
-        backButton = new BackButton(100,100,1);
+        backButton = new BackButton(100,100,1,100,100);
     }
 
 

@@ -7,9 +7,15 @@ import android.graphics.Point;
 import android.graphics.Rect;
 
 public class BaslatButonu implements ButtonInterface{
-    private int butonGenisligi = 430;
-    private int butonYuksekligi = 300;
+    private int butonGenisligi ;
+    private int butonYuksekligi ;
     private Rect rectangle = new Rect((Constants.SCREEN_WIDTH / 2) - (this.butonGenisligi / 2), ((Constants.SCREEN_HEIGHT * 2) / 3) - (this.butonYuksekligi / 2), (Constants.SCREEN_WIDTH / 2) + (this.butonGenisligi / 2), ((Constants.SCREEN_HEIGHT * 2) / 3) + (this.butonYuksekligi / 2));
+
+    public BaslatButonu(Point point,int butonYuksekligi,int butonGenisligi){
+        this.butonGenisligi=butonGenisligi;
+        this.butonYuksekligi=butonYuksekligi;
+        setButtonCoordinate(point);
+    }
 
     public void draw(Canvas canvas) {
         BitmapFactory bf = new BitmapFactory();

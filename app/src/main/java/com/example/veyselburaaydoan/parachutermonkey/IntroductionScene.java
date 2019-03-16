@@ -58,7 +58,7 @@ public class IntroductionScene implements Scene {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 1 * Constants.SCREEN_HEIGHT / 4);
         paint =new Paint();
         textPaint =new Paint();
-        textPaint.setTextSize(60);
+        textPaint.setTextSize(Constants.KUCUK_YAZI);
         textPaint.setColor(Color.WHITE);
         //dialog.setBitmapBuyuklugu(150);
         //dialog.setBitmapPadding(20);
@@ -164,7 +164,7 @@ public class IntroductionScene implements Scene {
                     moveRight = true;
                 }
 
-                if (seviye == 0 &&(int) event.getX() < Constants.SCREEN_WIDTH / 2) {
+                if (seviye == 0 &&(int) event.getX() < Constants.SCREEN_WIDTH / 2 ) {
                     moveRight = false;
                 }
 
@@ -194,13 +194,13 @@ public class IntroductionScene implements Scene {
     }
 
     private boolean isFirst(){
-        sharedPref = Constants.MAIN_ACTİVİTY.getSharedPreferences(
-                Constants.MAIN_ACTİVİTY.getLocalClassName(), Context.MODE_PRIVATE);
+        sharedPref = Constants.MAIN_ACTIVITY.getSharedPreferences(
+                Constants.MAIN_ACTIVITY.getLocalClassName(), Context.MODE_PRIVATE);
         return sharedPref.getBoolean("ilkMiPref", true);
     }
 
     private void applyPrefFalse(){
-        sharedPref = Constants.MAIN_ACTİVİTY.getPreferences(Context.MODE_PRIVATE);
+        sharedPref = Constants.MAIN_ACTIVITY.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("ilkMiPref",false);
         editor.apply();

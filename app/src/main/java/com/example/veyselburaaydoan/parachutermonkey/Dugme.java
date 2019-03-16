@@ -12,8 +12,8 @@ public class Dugme implements ButtonInterface {
     private Rect rectangleBelow;
     private Rect rectangle;
 
-    private int butonGenisligi=Constants.SCREEN_WIDTH/2;
-    private  int butonYuksekligi=100;
+    private int butonGenisligi;
+    private  int butonYuksekligi;
 
     /*
     private int butonGenisligi=Constants.SCREEN_WIDTH/2;

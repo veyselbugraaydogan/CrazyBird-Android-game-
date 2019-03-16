@@ -28,7 +28,9 @@ public class MainActivity extends Activity {
         int pixel = 120;
         final float scale = getResources().getDisplayMetrics().density;
         Constants.DIP = (int) (pixel* scale + 0.5f);
-        Constants.MAIN_ACTİVİTY=this;
+        Constants.MAIN_ACTIVITY=this;
+        Constants.BUYUK_YAZI=Constants.SCREEN_WIDTH/10;
+        Constants.KUCUK_YAZI=Constants.SCREEN_WIDTH/20;
         setContentView(new GamePanel(this));
 
 

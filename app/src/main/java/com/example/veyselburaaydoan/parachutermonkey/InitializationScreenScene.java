@@ -37,8 +37,8 @@ public class InitializationScreenScene implements Scene {
         paint.setTextSize(Constants.SCREEN_WIDTH/10);
         paint.setColor(Color.WHITE);
 
-        rect = new Rect(Constants.SCREEN_WIDTH/4,Constants.SCREEN_WIDTH/4,
-                3*Constants.SCREEN_WIDTH/4,3*Constants.SCREEN_WIDTH/4);
+        rect = new Rect(Constants.SCREEN_WIDTH/4,Constants.SCREEN_HEIGHT/2-Constants.SCREEN_WIDTH/4,
+                3*Constants.SCREEN_WIDTH/4,Constants.SCREEN_HEIGHT/2+Constants.SCREEN_WIDTH/4);
     }
 
     @Override
@@ -106,8 +106,8 @@ public class InitializationScreenScene implements Scene {
     }
 
     private boolean isFirst(){
-        sharedPref = Constants.MAIN_ACTİVİTY.getSharedPreferences(
-                Constants.MAIN_ACTİVİTY.getLocalClassName(), Context.MODE_PRIVATE);
+        sharedPref = Constants.MAIN_ACTIVITY.getSharedPreferences(
+                Constants.MAIN_ACTIVITY.getLocalClassName(), Context.MODE_PRIVATE);
         return sharedPref.getBoolean("ilkMiPref", true);
     }
 

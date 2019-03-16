@@ -17,6 +17,8 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
+import java.util.Locale;
+
 public class GameplayScene implements Scene , RewardedVideoAdListener {
 
     private final String TAG="Gameplay Scene";
@@ -29,6 +31,8 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
     private BulutManager bulutManager;
     private BaslatButonu baslatButonu;
     private BaslatButonu reklamButonu;
+
+    private boolean atFirstGameOver;
 
     private long bilinenElapsedTime;
 
@@ -76,12 +80,15 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
 
         arkaPlan = new Rect(0,0,screenWidth,Constants.SCREEN_HEIGHT);
 
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
+        Log.v(TAG,"Screen height :" + Constants.SCREEN_HEIGHT);
+        Log.v(TAG,"Screen width :" + Constants.SCREEN_WIDTH);
+
         MobileAds.initialize(Constants.CURRENT_CONTEXT, "ca-app-pub-3940256099942544~3347511713");
 
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(Constants.CURRENT_CONTEXT);
         mRewardedVideoAd.setRewardedVideoAdListener(this);
         loadRewardedVideoAd();
+
 
     }
 
@@ -101,10 +108,13 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
                 Constants.SCREEN_HEIGHT / 13, Color.rgb(33, 75, 0));
 
         bulutManager = new BulutManager();
-        baslatButonu = new BaslatButonu();
-        reklamButonu = new BaslatButonu();
+        baslatButonu = new BaslatButonu(new Point(0,0),
+                15*Constants.SCREEN_WIDTH/64,3*Constants.SCREEN_WIDTH/8);
+        reklamButonu = new BaslatButonu(new Point(0,0),
+                15*Constants.SCREEN_WIDTH/64,3*Constants.SCREEN_WIDTH/8);
         settingsButton = new SettingsButton(Constants.SCREEN_WIDTH - 100, 100);
         startTime =  System.currentTimeMillis();
+        atFirstGameOver=true;
 
     }
 
@@ -172,20 +182,23 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
 
         if (gameOver) {
             if (!(ilk)) {
+                /*Burasi oyuncu gercekten gameover omdugunda acilan oyur kismi*/
+                gameOverTetiklemesi();
                 Paint paint = new Paint();
-                paint.setTextSize(Constants.SCREEN_WIDTH/10);
+                paint.setTextSize(Constants.BUYUK_YAZI);
                 paint.setColor(Color.BLACK);
                 drawCenterText(canvas, paint, "Game Over",Constants.SCREEN_HEIGHT/3,r);
                 int highScore=gameOver();
                 drawCenterText(canvas, paint, ""+ highScore ,50 + paint.descent() - paint.ascent(),r);
                 paint.setColor(Color.RED);
-                paint.setTextSize((float)(paint.getTextSize()/1.6));
+                paint.setTextSize(Constants.KUCUK_YAZI);
                 drawCenterText(canvas, paint, "Best Score" ,150 + paint.descent() - paint.ascent(),r);
                 reklamButonu.setButtonCoordinate(new Point(Constants.SCREEN_WIDTH/4,2*Constants.SCREEN_HEIGHT/3));
                 reklamButonu.draw(canvas);
                 baslatButonu.setButtonCoordinate(new Point(3*Constants.SCREEN_WIDTH/4,2*Constants.SCREEN_HEIGHT/3));
                 baslatButonu.draw(canvas);
             }else{
+                /*Burasi oyun ilk acildiginda calisan gameover kismi*/
                 rectPlayer.update(playerPoint);
                 baslatButonu.setButtonCoordinate(new Point(Constants.SCREEN_WIDTH/2,2*Constants.SCREEN_HEIGHT/3));
                 baslatButonu.draw(canvas);
@@ -256,7 +269,6 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
             if (reklamButonu.doesCollide(new Rect((int) event.getX(), (int) event.getY(),
                     (int) event.getX() , (int) event.getY() )) && gameOver ) {
                 if (mRewardedVideoAd.isLoaded()) {
-                    bilinenElapsedTime=Constants.ELAPSED_TIME;
                     mRewardedVideoAd.show();
                 }
                 Log.v(TAG,"reklam butonuna basıldı");
@@ -305,23 +317,42 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
 
     }
 
-    private int gameOver(){
-        SharedPreferences sharedPref = Constants.MAIN_ACTİVİTY.getSharedPreferences(
-                Constants.MAIN_ACTİVİTY.getLocalClassName(), Context.MODE_PRIVATE);
-        int defaultValue = 0;
-        int highScore = sharedPref.getInt("saved_high_score_key", defaultValue);
 
-        if(obstacleManager.getScore()>highScore) {
-            sharedPref = Constants.MAIN_ACTİVİTY.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("saved_high_score_key", obstacleManager.getScore());
-            editor.apply();
+    private void gameOverTetiklemesi(){
+        /*Bu fonksiyon oyuncu game over oldugunda yalnizca bir sefer calismak uzere yazilmistir
+        * Fonksiyon simdilik sadece reklam sonrasinda donus yapildiginda oyunun bitisini bilmeli ki
+        * onAdClosed da elapsed time i guncelleyebilsin.*/
+        if(atFirstGameOver){
+            bilinenElapsedTime=Constants.ELAPSED_TIME;
+            atFirstGameOver=false;
+            Log.v(TAG,"gameOverTetiklemesi");
         }
+
+    }
+
+    private int gameOver(){
+
+        /*Her draw da sharedpref yazmasi oldugu icin fps dusuyor
+        * Bu fonksiyon her sefeninde cagirilmayabilir.*/
+
+            SharedPreferences sharedPref = Constants.MAIN_ACTIVITY.getSharedPreferences(
+                    Constants.MAIN_ACTIVITY.getLocalClassName(), Context.MODE_PRIVATE);
+            int defaultValue = 0;
+            int highScore = sharedPref.getInt("saved_high_score_key", defaultValue);
+
+            if (obstacleManager.getScore() > highScore) {
+                sharedPref = Constants.MAIN_ACTIVITY.getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("saved_high_score_key", obstacleManager.getScore());
+                editor.apply();
+            }
 
         //Log.v("GAME OVER İÇİ","gameover içi");
        // Log.v("GAME OVER İÇİ","highscrore = "+highScore);
         highScore = sharedPref.getInt("saved_high_score_key", defaultValue);
         return highScore;
+
+
     }
 
 
@@ -349,7 +380,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         Constants.ELAPSED_TIME=bilinenElapsedTime;
         ilk = false;
         gameOver = false;
-        //Toast.makeText(Constants.CURRENT_CONTEXT,"on video ad closed",Toast.LENGTH_SHORT).show();
+        Toast.makeText(Constants.CURRENT_CONTEXT,"on video ad closed",Toast.LENGTH_SHORT).show();
     }
 
     @Override

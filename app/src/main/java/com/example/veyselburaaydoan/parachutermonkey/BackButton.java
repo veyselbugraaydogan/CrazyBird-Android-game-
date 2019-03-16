@@ -6,8 +6,8 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 public class BackButton implements GameObject {
-    private int butonGenisligi = 100;
-    private int butonYuksekligi = 100;
+    private int butonGenisligi;
+    private int butonYuksekligi;
     private int gidilecekSenaryo;
     private Rect rectangle;
     /* renamed from: x */
@@ -15,7 +15,9 @@ public class BackButton implements GameObject {
     /* renamed from: y */
     private int f14y;
 
-    public BackButton(int x, int y, int gidilecekSenaryo) {
+    public BackButton(int x, int y, int gidilecekSenaryo,int butonYuksekligi,int butonGenisligi) {
+        this.butonGenisligi=butonGenisligi;
+        this.butonYuksekligi=butonYuksekligi;
         this.f13x = x;
         this.f14y = y;
         this.gidilecekSenaryo = gidilecekSenaryo;

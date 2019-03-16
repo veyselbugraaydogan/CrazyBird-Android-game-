@@ -21,7 +21,7 @@ public class SettingsScene implements Scene {
 
     private int sceneNumber;
 
-    private int buttonGenisligi=Constants.SCREEN_WIDTH/2,buttonYuksekligi=100;
+    private int buttonGenisligi=2*Constants.SCREEN_WIDTH/3,buttonYuksekligi=Constants.SCREEN_WIDTH/10;
 
     private ArrayList<ButtonInterface> objects ;
 

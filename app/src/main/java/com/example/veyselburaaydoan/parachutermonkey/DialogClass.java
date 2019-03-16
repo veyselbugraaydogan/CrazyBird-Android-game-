@@ -30,7 +30,7 @@ public class DialogClass implements GameObject {
 
     private Dugme okButton;
 
-    private int bitmapBuyuklugu = 20, bitmapPadding = 30;
+    private int bitmapBuyuklugu , bitmapPadding ;
 
     public DialogClass(Paint textPaint, int width, Point solustKose, String text, int primaryColor, int secondaryColor, Bitmap bitmap) {
 
