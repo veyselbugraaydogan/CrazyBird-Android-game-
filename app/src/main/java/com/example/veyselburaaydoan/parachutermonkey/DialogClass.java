@@ -72,7 +72,7 @@ public class DialogClass implements GameObject {
         setLineCount();
         setRects();
         setButton();
-        Log.v(TAG, "initiated");
+        //Log.v(TAG, "initiated");
     }
 
     private void setButton(){
@@ -108,7 +108,7 @@ public class DialogClass implements GameObject {
 
         bottomRect =new Rect(x, y, x + width, y + lineHeight*2);
 
-        Log.v(TAG, "initiate rect");
+        //Log.v(TAG, "initiate rect");
     }
 
     private int getTextHeight() {
@@ -166,7 +166,7 @@ public class DialogClass implements GameObject {
         width /= text.length();
 
         spaceNormal = width;
-        Log.v(TAG, "line height:"+ lineHeight + "character width: "+width );
+        //Log.v(TAG, "line height:"+ lineHeight + "character width: "+width );
     }
 
     private void setLineCount() {
@@ -186,7 +186,7 @@ public class DialogClass implements GameObject {
         }
 
 
-        Log.v(TAG, "set line counts");
+        //Log.v(TAG, "set line counts");
 
         float x = solUstKose.x;
         int indexCount = 0;

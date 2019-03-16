@@ -41,7 +41,7 @@ public class Dugme implements ButtonInterface {
                 y - butonYuksekligi/2,
                 ( x + (butonGenisligi/2)),
                 y + butonYuksekligi/2);
-        Log.v("DUGME","x:"+rectangleBelow.left +"y:"+rectangleBelow.top);
+       // Log.v("DUGME","x:"+rectangleBelow.left +"y:"+rectangleBelow.top);
     }
 
     public int getButonYuksekligi() {

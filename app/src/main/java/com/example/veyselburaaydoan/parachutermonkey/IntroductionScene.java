@@ -27,7 +27,7 @@ public class IntroductionScene implements Scene {
     private Paint arkaPlanRengi;
     private Point playerPoint;
 
-    private boolean movingPlayer = false,moveRight = false;
+    private boolean movingPlayer = false,moveRight = false,moveLeft=false;
 
     private DialogClass dialog;
 
@@ -78,7 +78,8 @@ public class IntroductionScene implements Scene {
         if (movingPlayer) {
             if (moveRight) {
                 playerPoint.set(playerPoint.x + 3, playerPoint.y);
-            } else {
+            }
+            if (moveLeft){
                 playerPoint.set(playerPoint.x - 3, playerPoint.y);
             }
         }
@@ -162,10 +163,11 @@ public class IntroductionScene implements Scene {
                 movingPlayer = true;
                 if (seviye == 1 &&(int) event.getX() > Constants.SCREEN_WIDTH / 2) {
                     moveRight = true;
+
                 }
 
                 if (seviye == 0 &&(int) event.getX() < Constants.SCREEN_WIDTH / 2 ) {
-                    moveRight = false;
+                    moveLeft = true;
                 }
 
             }
@@ -174,6 +176,8 @@ public class IntroductionScene implements Scene {
         }
         if (event.getAction() == MotionEvent.ACTION_UP) {
             movingPlayer = false;
+            moveLeft=false;
+            moveRight=false;
         }
 
     }
