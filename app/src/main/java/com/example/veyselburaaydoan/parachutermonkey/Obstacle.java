@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 public class Obstacle implements GameObject {
     private Rect rectangle;
@@ -12,6 +13,9 @@ public class Obstacle implements GameObject {
     private int color;
     private Bitmap img;
     private int obstacleHeight,playerGap;
+    private int playerGapOynatmaYonu=1;
+
+    private String TAG = "Obstacle :";
 
 
     public Obstacle (int rectHeight,int color,int startX,int startY,int playerGap,Bitmap img){
@@ -23,6 +27,7 @@ public class Obstacle implements GameObject {
         rectangle2 = new Rect(startX+playerGap , startY , Constants.SCREEN_WIDTH , startY+rectHeight);
 
         this.img =img;
+        setPlayerGapOynatmaYonu();
 
     }
 
@@ -44,6 +49,31 @@ public class Obstacle implements GameObject {
         rectangle.bottom -= y;
         rectangle2.top -= y;
         rectangle2.bottom -= y;
+    }
+
+    private void setPlayerGapOynatmaYonu(){
+        if (rectangle.right + playerGap/2 < Constants.SCREEN_WIDTH/2)
+            playerGapOynatmaYonu=1;
+        else
+            playerGapOynatmaYonu=-1;
+        Log.v(TAG,"Player gap yonu degisti");
+    }
+
+    public void playerGapiOynat(int hiz){
+        /*Bu metod player gapi saga veya sola dogru oynatir.
+        * Oynatma yonu arti ise saga, eksi ise sola dogru oynatir.*/
+
+        int vektor = hiz*playerGapOynatmaYonu;
+
+        /*Oncesinde player gap iki uctan birine geldi mi bunu kontrol ediyor.*/
+
+        if (rectangle.right+vektor<0 || rectangle2.left+vektor>Constants.SCREEN_WIDTH)
+            setPlayerGapOynatmaYonu();
+        rectangle.right +=vektor;
+        rectangle2.left +=vektor;
+
+        Log.v(TAG,"vektör :"+vektor);
+
     }
 
     public boolean playerCollide(Rect player){

@@ -90,19 +90,7 @@ public class ObstacleManager {
 
 
     private void populateObstacles() {
-    //    int suankiY = 3 * Constants.SCREEN_HEIGHT / 2;
-/*
-        while (suankiY > 0) {
 
-            Log.v("POPULATE====","new Obstacle");
-
-            int xBaslangıcı = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(new Obstacle(obstacleHeight, color, xBaslangıcı, suankiY + Constants.SCREEN_HEIGHT, playerGap,obstacleImg));
-            suankiY -= obstacleHeight + obstacleGap;
-
-        }
-
-*/
 
         int startY=Constants.SCREEN_HEIGHT;
 
@@ -113,14 +101,6 @@ public class ObstacleManager {
             startY +=obstacleHeight + obstacleGap;
 
         }
-    /*
-        for(int i=0;i<3;i++){
-            int xBaslangıcı = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(new Obstacle(obstacleHeight, color, xBaslangıcı, suankiY + Constants.SCREEN_HEIGHT, playerGap,obstacleImg));
-            suankiY -= obstacleHeight + obstacleGap;
-        }
-    */
-        // Log.v("POPULATE===="," sz:: " + sz);
 
         for (Obstacle ob : obstacles) {
             int high = ob.getRectangle().bottom + obstacleGap - (int) (1.5 * obstacleHeight);
@@ -143,20 +123,6 @@ public class ObstacleManager {
         tuzakSayisi = (int) (speed) / 6;
 
 
-/*
-        if (obstacles.get((obstacleIndex)%3).getRectangle().bottom <= 0) {
-            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(0, new Obstacle(obstacleHeight, color, xStart,
-                    obstacles.get(0).getRectangle().bottom + obstacleHeight + obstacleGap, playerGap,
-                    obstacleImg));
-            obstacles.remove(obstacles.size() - 1);
-            obs--;
-            int high = obstacles.get(0).getRectangle().bottom + obstacleGap - (int) (1.5 * obstacleHeight);
-            int low = obstacles.get(0).getRectangle().bottom + (int) (1.5 * obstacleHeight);
-
-
-            tuzaklar.add(0, new Trap(high, low, tuzakSayisi + 1,trapImg,tuzakBuyuklugu));
-        }*/
 
         obsInd=(obstacleIndex)%3;
 
@@ -205,6 +171,7 @@ public class ObstacleManager {
 
         for (Obstacle ob : o) {
                     ob.yukarıCıkar((speed));
+                    ob.playerGapiOynat(1);
                 }
 
                 for (Trap t : t) {
