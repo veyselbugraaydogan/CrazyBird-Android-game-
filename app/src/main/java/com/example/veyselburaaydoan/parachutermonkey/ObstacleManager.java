@@ -39,17 +39,20 @@ public class ObstacleManager {
 
     private int score = 0;
 
+    private SoundPlayer soundPlayer;
+
     public void setScore(int score) {
         this.score = score;
     }
 
     private final int engelSayisi=3;
 
-    public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
+    public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color,SoundPlayer soundPlayer) {
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
         this.obstacleHeight = obstacleHeight;
         this.color = color;
+        this.soundPlayer = soundPlayer;
 
         tuzakBuyuklugu = Constants.SCREEN_WIDTH / 30;
 
@@ -146,6 +149,7 @@ public class ObstacleManager {
 
         if (obstacles.get( (obstacleIndex+obs)%3 ).getRectangle().top <= (Constants.SCREEN_HEIGHT / 4 )) {
             score++;
+            soundPlayer.playScoreSound();
            obs++;
         }
 

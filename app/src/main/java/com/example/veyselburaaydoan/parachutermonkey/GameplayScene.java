@@ -31,6 +31,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
     private BulutManager bulutManager;
     private BaslatButonu baslatButonu;
     private BaslatButonu reklamButonu;
+    private SoundPlayer soundPlayer;
 
     private boolean atFirstGameOver;
 
@@ -105,7 +106,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 4);
 
         obstacleManager = new ObstacleManager(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 3,
-                Constants.SCREEN_HEIGHT / 13, Color.rgb(33, 75, 0));
+                Constants.SCREEN_HEIGHT / 13, Color.rgb(33, 75, 0),soundPlayer);
 
         bulutManager = new BulutManager();
         baslatButonu = new BaslatButonu(new Point(0,0),
@@ -115,6 +116,8 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         settingsButton = new SettingsButton(Constants.SCREEN_WIDTH - 100, 100);
         startTime =  System.currentTimeMillis();
         atFirstGameOver=true;
+
+        soundPlayer = new SoundPlayer(Constants.CURRENT_CONTEXT);
 
     }
 
@@ -182,7 +185,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
 
         if (gameOver) {
             if (!(ilk)) {
-                /*Burasi oyuncu gercekten gameover omdugunda acilan oyur kismi*/
+                /*Burasi oyuncu gercekten gameover oldugunda acilan oyur kismi*/
                 gameOverTetiklemesi();
                 Paint paint = new Paint();
                 paint.setTextSize(Constants.BUYUK_YAZI);
@@ -263,6 +266,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
                 ilk = false;
                 gameOver = false;
                 Log.v(TAG,"Başlat butonuna basıldı");
+                soundPlayer.playWingSound();
                 return;
             }
 
@@ -326,6 +330,8 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
             bilinenElapsedTime=Constants.ELAPSED_TIME;
             atFirstGameOver=false;
             Log.v(TAG,"gameOverTetiklemesi");
+            soundPlayer.playOverSound();
+            soundPlayer.stopWingSound();
         }
 
     }
@@ -380,6 +386,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         Constants.ELAPSED_TIME=bilinenElapsedTime;
         ilk = false;
         gameOver = false;
+        soundPlayer.playWingSound();
         Toast.makeText(Constants.CURRENT_CONTEXT,"on video ad closed",Toast.LENGTH_SHORT).show();
     }
 
