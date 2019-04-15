@@ -56,7 +56,7 @@ public class Obstacle implements GameObject {
             playerGapOynatmaYonu=1;
         else
             playerGapOynatmaYonu=-1;
-        Log.v(TAG,"Player gap yonu degisti");
+        //Log.v(TAG,"Player gap yonu degisti");
     }
 
     public void playerGapiOynat(int hiz){
@@ -72,7 +72,7 @@ public class Obstacle implements GameObject {
         rectangle.right +=vektor;
         rectangle2.left +=vektor;
 
-        Log.v(TAG,"vektör :"+vektor);
+        //Log.v(TAG,"vektör :"+vektor);
 
     }
 

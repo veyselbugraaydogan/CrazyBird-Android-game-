@@ -2,6 +2,8 @@ package com.example.veyselburaaydoan.parachutermonkey;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -109,10 +111,14 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
                 Constants.SCREEN_HEIGHT / 13, Color.rgb(33, 75, 0),soundPlayer);
 
         bulutManager = new BulutManager();
+
+        BitmapFactory bf = new BitmapFactory();
+        Bitmap playButton = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.play_button);
+        Bitmap adButton = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.heart);
         baslatButonu = new BaslatButonu(new Point(0,0),
-                15*Constants.SCREEN_WIDTH/64,3*Constants.SCREEN_WIDTH/8);
+                15*Constants.SCREEN_WIDTH/64,3*Constants.SCREEN_WIDTH/8,playButton);
         reklamButonu = new BaslatButonu(new Point(0,0),
-                15*Constants.SCREEN_WIDTH/64,3*Constants.SCREEN_WIDTH/8);
+                15*Constants.SCREEN_WIDTH/64,3*Constants.SCREEN_WIDTH/8,adButton);
         settingsButton = new SettingsButton(Constants.SCREEN_WIDTH - 100, 100);
         startTime =  System.currentTimeMillis();
         atFirstGameOver=true;
@@ -330,8 +336,9 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
             bilinenElapsedTime=Constants.ELAPSED_TIME;
             atFirstGameOver=false;
             Log.v(TAG,"gameOverTetiklemesi");
-            soundPlayer.playOverSound();
             soundPlayer.stopWingSound();
+            soundPlayer.playOverSound();
+
         }
 
     }
@@ -359,6 +366,10 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         return highScore;
 
 
+    }
+
+    public SoundPlayer getSoundManager(){
+        return soundPlayer;
     }
 
 

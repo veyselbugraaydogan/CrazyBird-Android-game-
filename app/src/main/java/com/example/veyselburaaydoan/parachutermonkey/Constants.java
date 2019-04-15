@@ -13,4 +13,5 @@ public class Constants {
     public static float BUYUK_YAZI;
     public static float KUCUK_YAZI;
     public static String tuzakYazisi,solagit,sagaGit;
+    public static final String isSoundOnSharedPref = "isSoundOn";
 }

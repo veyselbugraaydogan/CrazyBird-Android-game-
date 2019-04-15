@@ -1,6 +1,7 @@
 package com.example.veyselburaaydoan.parachutermonkey;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaExtractor;
@@ -21,6 +22,10 @@ public class SoundPlayer {
     private MediaPlayer mediaPlayer;
 
     private Context context;
+
+    private boolean isSoundOn;
+
+    private SharedPreferences sharedPref;
 
 
     public SoundPlayer(Context context){
@@ -49,19 +54,28 @@ public class SoundPlayer {
 
         initializeEffects();
 
+
+        sharedPref = Constants.CURRENT_CONTEXT.getSharedPreferences(Constants.isSoundOnSharedPref,Context.MODE_PRIVATE);
+
+        isSoundOn = sharedPref.getBoolean(Constants.isSoundOnSharedPref, true);
+
+
+
     }
 
     public void playScoreSound(){
+        if(isSoundOn)
         soundPool.play(scoreSound,1.0f,1.0f,1,0,1.0f);
     }
 
     public void playOverSound(){
+        if(isSoundOn)
         soundPool.play(overSound,1.0f,1.0f,1,0,1.0f);
     }
 
     public void playWingSound(){
         //soundPool.play(wingSound,1.0f,1.0f,1,0,1.0f);
-
+        if(isSoundOn)
         mediaPlayer.start();
     }
 
@@ -89,6 +103,20 @@ public class SoundPlayer {
         mediaPlayer.setLooping(true);
 
         wingSound = soundPool.load(context,R.raw.wing_sound,1);
+    }
+
+    public void setSound(boolean soundStatus){
+        isSoundOn = soundStatus;
+        if(!isSoundOn)
+            stopWingSound();
+    }
+
+    public MediaPlayer getMediaPlayer(){
+        return  mediaPlayer;
+    }
+
+    public boolean isSoundOn(){
+        return isSoundOn;
     }
 
 }

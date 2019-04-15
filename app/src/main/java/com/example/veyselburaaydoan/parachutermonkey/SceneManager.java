@@ -41,6 +41,10 @@ public class SceneManager {
         ACTİVE_SCENE = createdScene;
     }
 
+    public static GameplayScene getGamePlayScene(){
+        return (GameplayScene) scenes.get(0);
+    }
+
     public static void setActiveScene(int no){
         ACTİVE_SCENE = no;
     }

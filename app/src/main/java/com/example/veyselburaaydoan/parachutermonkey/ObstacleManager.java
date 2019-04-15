@@ -48,6 +48,7 @@ public class ObstacleManager {
     private final int engelSayisi=3;
 
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color,SoundPlayer soundPlayer) {
+
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
         this.obstacleHeight = obstacleHeight;
@@ -56,6 +57,7 @@ public class ObstacleManager {
 
         tuzakBuyuklugu = Constants.SCREEN_WIDTH / 30;
 
+        
         BitmapFactory bf = new BitmapFactory();
         trapImg = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.trap);
         obstacleImg =bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.duvar);
