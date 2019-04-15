@@ -68,8 +68,9 @@ public class SoundPlayer {
     public void stopWingSound(){
 
         mediaPlayer.stop();
-        mediaPlayer.reset();
+        //mediaPlayer.reset();
         //soundPool.stop(wingSound);
+
     }
 
     public void releaseAllSoundEffects(){

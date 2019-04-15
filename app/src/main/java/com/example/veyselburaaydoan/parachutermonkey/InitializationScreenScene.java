@@ -31,14 +31,26 @@ public class InitializationScreenScene implements Scene {
     public InitializationScreenScene(int sceneNumber){
         this.sceneNumber = sceneNumber;
         Constants.START_TIME = System.currentTimeMillis();
+
         BitmapFactory bf = new BitmapFactory();
-        initBitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.v3_1);
+        initBitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(),R.drawable.atena_logo_with_text);
+
+        int imageHeight =initBitmap.getHeight();
+        int imageWidth =initBitmap.getWidth();
+
+        Log.w(TAG,"height ="+imageHeight+" width =" + imageWidth);
+
+        int realWidth=2*Constants.SCREEN_WIDTH/4;
+        int realHeight = imageHeight * realWidth / imageWidth;
+
+
+
         paint = new Paint();
         paint.setTextSize(Constants.SCREEN_WIDTH/10);
         paint.setColor(Color.WHITE);
 
-        rect = new Rect(Constants.SCREEN_WIDTH/4,Constants.SCREEN_HEIGHT/2-Constants.SCREEN_WIDTH/4,
-                3*Constants.SCREEN_WIDTH/4,Constants.SCREEN_HEIGHT/2+Constants.SCREEN_WIDTH/4);
+        rect = new Rect(Constants.SCREEN_WIDTH/4,Constants.SCREEN_HEIGHT/2-realHeight/2,
+                3*Constants.SCREEN_WIDTH/4,Constants.SCREEN_HEIGHT/2+realHeight/2);
     }
 
     @Override
