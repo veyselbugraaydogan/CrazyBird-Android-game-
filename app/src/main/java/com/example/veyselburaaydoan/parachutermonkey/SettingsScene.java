@@ -38,10 +38,11 @@ public class SettingsScene implements Scene {
     }
 
     private void initialize(){
+
         resumeDugmesi = new Dugme(0, 0,"RESUME",buttonGenisligi,buttonYuksekligi);
 
-        creditsDugmesi = new Dugme(0,0,"CREDITS"
-                ,buttonGenisligi,buttonYuksekligi);
+        /*creditsDugmesi = new Dugme(0,0,"CREDITS"
+                ,buttonGenisligi,buttonYuksekligi);*/
 
         introductionDugmesi = new Dugme(0,0,"HOW TO PLAY",buttonGenisligi,buttonYuksekligi);
 
@@ -51,7 +52,7 @@ public class SettingsScene implements Scene {
         objects = new ArrayList<>();
         objects.add(resumeDugmesi);
         objects.add(introductionDugmesi);
-        objects.add(creditsDugmesi);
+        //objects.add(creditsDugmesi);
         objects.add(sesButonu);
     }
 
@@ -103,9 +104,11 @@ public class SettingsScene implements Scene {
                 sesButonu.soundOnOf();
             }
 
+            /*
+
             if(creditsDugmesi.doesCollide(new Rect(x,y,x+1,y+1))){
                 SceneManager.setScene(sceneNumber,2);
-            }
+            }*/
 
             if(introductionDugmesi.doesCollide(new Rect(x,y,x+1,y+1))){
                 SceneManager.setScene(sceneNumber,4);

@@ -192,6 +192,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         if (gameOver) {
             if (!(ilk)) {
                 /*Burasi oyuncu gercekten gameover oldugunda acilan oyur kismi*/
+
                 gameOverTetiklemesi();
                 Paint paint = new Paint();
                 paint.setTextSize(Constants.BUYUK_YAZI);
@@ -220,6 +221,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
     @Override
     public void onTerminate() {
         SceneManager.setActiveScene(sceneNumber);
+        soundPlayer.stopWingSound();
     }
     private void reset() {
         init();
@@ -228,6 +230,10 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
 
     @Override
     public void onCreate() {
+
+        if(!gameOver){
+            soundPlayer.playWingSound();
+        }
 
     }
 
@@ -262,8 +268,8 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
                     moveRight = false;
                     moveLeft = true;
                 }
-
             }
+
 
             if (baslatButonu.doesCollide(new Rect((int) event.getX(), (int) event.getY(),
                     (int) event.getX() , (int) event.getY() )) && gameOver ) {

@@ -42,6 +42,7 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         secondaryThread =  new SecondaryThread (this);
         secondaryThread.setRunning(true);
         secondaryThread.start();
+        SceneManager.getActiveScene().onCreate();
         //updater =  new UpdaterThread (this);
         //updater.setRunning(true);
         //updater.start();
@@ -50,13 +51,14 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Log.v("SURFACE CHANGED", "SURFACE CHANGED");
+        SceneManager.getActiveScene().onCreate();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         Log.v("SURFACE DESTROYED", "SURFACE DESTROYED");
 
-
+        SceneManager.getActiveScene().onTerminate();
 
         boolean retry = true;
 

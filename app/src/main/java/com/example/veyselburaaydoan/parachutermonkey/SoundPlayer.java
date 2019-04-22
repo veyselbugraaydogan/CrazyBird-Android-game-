@@ -12,14 +12,13 @@ import android.os.Build;
 public class SoundPlayer {
 
     private AudioAttributes audioAttributes;
-    final int SOUND_POOL_MAX = 3;
+    final int SOUND_POOL_MAX = 2;
 
     private static SoundPool soundPool;
     private static int scoreSound;
     private static int overSound;
-    private static int wingSound;
 
-    private MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
 
     private Context context;
 
@@ -52,8 +51,9 @@ public class SoundPlayer {
 
         }
 
-        initializeEffects();
+        scoreSound = soundPool.load(context,R.raw.score_sound,1);
 
+        overSound = soundPool.load(context,R.raw.lose_sound,1);
 
         sharedPref = Constants.CURRENT_CONTEXT.getSharedPreferences(Constants.isSoundOnSharedPref,Context.MODE_PRIVATE);
 
@@ -74,36 +74,26 @@ public class SoundPlayer {
     }
 
     public void playWingSound(){
-        //soundPool.play(wingSound,1.0f,1.0f,1,0,1.0f);
-        if(isSoundOn)
-        mediaPlayer.start();
+
+            if (mediaPlayer == null) {
+
+                mediaPlayer = MediaPlayer.create(context, R.raw.wing_sound);
+                mediaPlayer.setLooping(true);
+
+            }
+        if(isSoundOn) {
+            mediaPlayer.start();
+        }
     }
 
     public void stopWingSound(){
-
-        mediaPlayer.stop();
-        //mediaPlayer.reset();
-        //soundPool.stop(wingSound);
+        if (mediaPlayer != null){
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
 
     }
 
-    public void releaseAllSoundEffects(){
-
-        mediaPlayer.stop();
-        mediaPlayer.release();
-        //soundPool.stop(wingSound);
-    }
-
-    public void initializeEffects(){
-        scoreSound = soundPool.load(context,R.raw.score_sound,1);
-
-        overSound = soundPool.load(context,R.raw.lose_sound,1);
-
-        mediaPlayer = MediaPlayer.create(context, R.raw.wing_sound);
-        mediaPlayer.setLooping(true);
-
-        wingSound = soundPool.load(context,R.raw.wing_sound,1);
-    }
 
     public void setSound(boolean soundStatus){
         isSoundOn = soundStatus;

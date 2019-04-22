@@ -132,7 +132,7 @@ public class IntroductionScene implements Scene {
 
         }else{
             if (isFirst()){
-                //applyPrefFalse();
+                applyPrefFalse();
                 SceneManager.setScene(sceneNumber,0);
 
             }else{
