@@ -64,6 +64,7 @@ public class SoundPlayer {
     }
 
     public void playScoreSound(){
+
         if(isSoundOn)
         soundPool.play(scoreSound,1.0f,1.0f,1,0,1.0f);
     }

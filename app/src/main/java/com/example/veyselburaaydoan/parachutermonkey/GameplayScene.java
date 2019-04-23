@@ -102,6 +102,8 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
 
     private void init() {
 
+        soundPlayer = new SoundPlayer(Constants.CURRENT_CONTEXT);
+
         rectPlayer = new RectPlayer(new Rect(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_WIDTH / 4,
                 ((Constants.SCREEN_WIDTH) / 3), (Constants.SCREEN_WIDTH) / 3), Color.rgb(255, 0, 0));
 
@@ -123,7 +125,6 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         startTime =  System.currentTimeMillis();
         atFirstGameOver=true;
 
-        soundPlayer = new SoundPlayer(Constants.CURRENT_CONTEXT);
 
     }
 
@@ -192,7 +193,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         if (gameOver) {
             if (!(ilk)) {
                 /*Burasi oyuncu gercekten gameover oldugunda acilan oyur kismi*/
-
+                soundPlayer.stopWingSound();
                 gameOverTetiklemesi();
                 Paint paint = new Paint();
                 paint.setTextSize(Constants.BUYUK_YAZI);
@@ -217,6 +218,20 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         settingsButton.draw(canvas);
 
     }
+
+    private void gameOverTetiklemesi(){
+        /*Bu fonksiyon oyuncu game over oldugunda yalnizca bir sefer calismak uzere yazilmistir
+         * Fonksiyon simdilik sadece reklam sonrasinda donus yapildiginda oyunun bitisini bilmeli ki
+         * onAdClosed da elapsed time i guncelleyebilsin.*/
+        if(atFirstGameOver){
+            bilinenElapsedTime=Constants.ELAPSED_TIME;
+            Log.v(TAG,"gameOverTetiklemesi");
+            soundPlayer.playOverSound();
+            atFirstGameOver=false;
+        }
+
+    }
+
 
     @Override
     public void onTerminate() {
@@ -334,20 +349,6 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
     }
 
 
-    private void gameOverTetiklemesi(){
-        /*Bu fonksiyon oyuncu game over oldugunda yalnizca bir sefer calismak uzere yazilmistir
-        * Fonksiyon simdilik sadece reklam sonrasinda donus yapildiginda oyunun bitisini bilmeli ki
-        * onAdClosed da elapsed time i guncelleyebilsin.*/
-        if(atFirstGameOver){
-            bilinenElapsedTime=Constants.ELAPSED_TIME;
-            atFirstGameOver=false;
-            Log.v(TAG,"gameOverTetiklemesi");
-            soundPlayer.stopWingSound();
-            soundPlayer.playOverSound();
-
-        }
-
-    }
 
     private int gameOver(){
 
@@ -404,7 +405,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         ilk = false;
         gameOver = false;
         soundPlayer.playWingSound();
-        Toast.makeText(Constants.CURRENT_CONTEXT,"on video ad closed",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Constants.CURRENT_CONTEXT,"on video ad closed",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -413,7 +414,7 @@ public class GameplayScene implements Scene , RewardedVideoAdListener {
         reset();
         obstacleManager.setScore(score);
 
-        Toast.makeText(Constants.CURRENT_CONTEXT,"on Rewarded",Toast.LENGTH_SHORT).show();
+        /* Toast.makeText(Constants.CURRENT_CONTEXT,"on Rewarded",Toast.LENGTH_SHORT).show(); */
         Log.v(TAG,"onRewarded");
     }
 
